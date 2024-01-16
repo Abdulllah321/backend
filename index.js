@@ -62,6 +62,7 @@ server.use("/cart", isAuth(), cartRouter.router);
 server.use("/orders", isAuth(), ordersRouter.router);
 server.use("/rating", isAuth(), ratingRouter.router);
 
+server.get((req, res) => res.sendFile(path.resolve("build", "index.html")));
 // Passport Strategies
 passport.use(
   "local",
