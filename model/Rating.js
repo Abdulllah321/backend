@@ -1,40 +1,43 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const ratingSchema = new Schema({
-  productId: {
-    type: Schema.Types.ObjectId,
-    ref: "Product",
-    required: true,
-  },
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  username: {
-    type: String,
-    ref: "User",
-    required: true,
-  },
-  rating: {
-    type: Number,
-    min: [1, "Rating should be at least 1"],
-    max: [5, "Rating should not exceed 5"],
-    required: true,
-  },
-  message: {
-    type: String,
-    required: true,
-  },
-  images: { type: [String] },
+const ratingSchema = new Schema(
+  {
+    productId: {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    username: {
+      type: String,
+      ref: "User",
+      required: true,
+    },
+    rating: {
+      type: Number,
+      min: [1, "Rating should be at least 1"],
+      max: [5, "Rating should not exceed 5"],
+      required: true,
+    },
+    message: {
+      type: String,
+      required: true,
+    },
+    images: { type: [String] },
 
-  userImg: { type: String },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    userImg: { type: String },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-});
+  { timestamps: true }
+);
 
 const virtual = ratingSchema.virtual("id");
 

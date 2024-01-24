@@ -4,6 +4,7 @@ const server = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const session = require("express-session");
+const nodemailer = require("nodemailer");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
@@ -22,6 +23,7 @@ const ratingRouter = require("./routes/Ratings");
 const { User } = require("./model/User");
 const { isAuth, sanitizeUser, cookieExtractor } = require("./services/common");
 const path = require("path");
+const rootRouter = express.Router();
 
 // JWT options
 const opts = {};
@@ -40,6 +42,10 @@ server.use(
   })
 );
 
+const buildPath = path.resolve("build");
+server.use(express.static(buildPath));
+// server.get((req, res) => res.sendFile(path.resolve("build", "index.html")));
+
 // Initialize passport middleware
 server.use(passport.initialize());
 server.use(passport.session());
@@ -54,16 +60,19 @@ server.use(express.raw({ type: "*/*" }));
 // to parse req.body
 server.use("/products", isAuth(), productsRouter.router);
 // we can also use JWT token for client-only auth
-server.use("/categories", isAuth(), categoriesRouter.router);
+server.use("/categories", categoriesRouter.router);
 server.use("/brands", isAuth(), brandsRouter.router);
 server.use("/users", isAuth(), usersRouter.router);
 server.use("/auth", authRouter.router);
 server.use("/cart", isAuth(), cartRouter.router);
 server.use("/orders", isAuth(), ordersRouter.router);
 server.use("/rating", isAuth(), ratingRouter.router);
+rootRouter.get("/*", async (req, res, next) => {
+  res.sendFile(path.join(buildPath, "index.html"));
+});
 
-server.get((req, res) => res.sendFile(path.resolve("build", "index.html")));
-// Passport Strategies
+server.use(rootRouter);
+
 passport.use(
   "local",
 
@@ -106,7 +115,7 @@ passport.use(
 passport.use(
   "jwt",
   new JwtStrategy(opts, async function (jwt_payload, done) {
-    console.log({ jwt_payload });
+    // console.log({ jwt_payload });
     try {
       const user = await User.findById(jwt_payload.id);
       if (user) {
@@ -122,7 +131,7 @@ passport.use(
 
 // this creates session variable req.user on being called from callbacks
 passport.serializeUser(function (user, cb) {
-  console.log("serialize", user);
+  // console.log("serialize", user);
   process.nextTick(function () {
     return cb(null, { id: user.id, role: user.role });
   });
@@ -130,7 +139,7 @@ passport.serializeUser(function (user, cb) {
 
 // this changes session variable req.user when called from authorized request
 passport.deserializeUser(function (user, cb) {
-  console.log("de-serialize", user);
+  // console.log("de-serialize", user);
   process.nextTick(function () {
     return cb(null, user);
   });

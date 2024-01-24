@@ -35,6 +35,7 @@ exports.fetchAllProducts = async (req, res) => {
     query = query.find({ brand: req.query.brand });
     totalProductsQuery = totalProductsQuery.find({ brand: req.query.brand });
   }
+
   //TODO : How to get sort on discounted Price not on Actual price
   if (req.query._sort && req.query._order) {
     query = query.sort({ [req.query._sort]: req.query._order });
@@ -50,24 +51,9 @@ exports.fetchAllProducts = async (req, res) => {
   }
 
   if (req.query.search) {
-    console.log("Received Search Term:", req.query.search);
-    const searchRegex = new RegExp(req.query.search, "i");
-
-    query = query.find({
-      $or: [
-        { productTitle: searchRegex },
-        { productDescription: searchRegex },
-        { productCategory: searchRegex },
-        { productBrand: searchRegex },
-      ],
-    });
+    query = query.find({ price: req.query.search });
     totalProductsQuery = totalProductsQuery.find({
-      $or: [
-        { productTitle: searchRegex },
-        { productDescription: searchRegex },
-        { productCategory: searchRegex },
-        { productBrand: searchRegex },
-      ],
+      price: req.query.search,
     });
   }
 
