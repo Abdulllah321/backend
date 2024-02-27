@@ -2,7 +2,6 @@ const { User } = require("../model/User");
 
 exports.fetchUserById = async (req, res) => {
   const { id } = req.user;
-  // console.log(id);
   try {
     const user = await User.findById(id);
     const doc = {
@@ -14,7 +13,6 @@ exports.fetchUserById = async (req, res) => {
       imageUrl: user.imageUrl,
     };
     res.status(200).json(doc);
-    console.log(doc);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -43,10 +41,8 @@ exports.deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
     const doc = await User.findByIdAndDelete(id);
-    // console.log("deleted successful: " + id); // Log the deletion success
     res.status(200).json(doc);
   } catch (err) {
-    // console.log("Deletion error: ", err); // Log the deletion error
     res.status(400).json(err);
   }
 };

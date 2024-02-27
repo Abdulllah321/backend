@@ -20,12 +20,14 @@ exports.fetchSubCategories = async (req, res) => {
 
 // Update controller to handle subcategory creation
 exports.createCategory = async (req, res) => {
-  const { label, value } = req.body;
+  const { label, value, image, mainCategory } = req.body;
 
   try {
     const newCategory = new Category({
       label,
       value,
+      image,
+      mainCategory,
     });
 
     const savedCategory = await newCategory.save();
@@ -58,10 +60,8 @@ exports.updateCategory = async (req, res) => {
     const category = await Category.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    // console.log("updated successful: " + id); // Log the update success
     res.status(200).json(category);
   } catch (err) {
-    // console.log("Update error: ", err); // Log the update error
     res.status(400).json(err);
   }
 };
@@ -72,10 +72,8 @@ exports.updateSubCategory = async (req, res) => {
     const category = await SubCategory.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    // console.log("updated successful: " + id); // Log the update success
     res.status(200).json(category);
   } catch (err) {
-    // console.log("Update error: ", err); // Log the update error
     res.status(400).json(err);
   }
 };
@@ -84,10 +82,8 @@ exports.deleteCategory = async (req, res) => {
   const { id } = req.params;
   try {
     const doc = await Category.findByIdAndDelete(id);
-    // console.log("deleted successful: " + id); // Log the deletion success
     res.status(200).json(doc);
   } catch (err) {
-    // console.log("Deletion error: ", err); // Log the deletion error
     res.status(400).json(err);
   }
 };
@@ -96,10 +92,8 @@ exports.deleteSubCategory = async (req, res) => {
   const { id } = req.params;
   try {
     const doc = await SubCategory.findByIdAndDelete(id);
-    // console.log("deleted successful: " + id); // Log the deletion success
     res.status(200).json(doc);
   } catch (err) {
-    // console.log("Deletion error: ", err); // Log the deletion error
     res.status(400).json(err);
   }
 };

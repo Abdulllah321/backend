@@ -59,7 +59,6 @@ server.use(express.raw({ type: "*/*" }));
 
 // to parse req.body
 server.use("/products", isAuth(), productsRouter.router);
-// we can also use JWT token for client-only auth
 server.use("/categories", categoriesRouter.router);
 server.use("/brands", isAuth(), brandsRouter.router);
 server.use("/users", isAuth(), usersRouter.router);
@@ -115,7 +114,6 @@ passport.use(
 passport.use(
   "jwt",
   new JwtStrategy(opts, async function (jwt_payload, done) {
-    // console.log({ jwt_payload });
     try {
       const user = await User.findById(jwt_payload.id);
       if (user) {
@@ -129,9 +127,7 @@ passport.use(
   })
 );
 
-// this creates session variable req.user on being called from callbacks
 passport.serializeUser(function (user, cb) {
-  // console.log("serialize", user);
   process.nextTick(function () {
     return cb(null, { id: user.id, role: user.role });
   });
@@ -139,7 +135,6 @@ passport.serializeUser(function (user, cb) {
 
 // this changes session variable req.user when called from authorized request
 passport.deserializeUser(function (user, cb) {
-  // console.log("de-serialize", user);
   process.nextTick(function () {
     return cb(null, user);
   });

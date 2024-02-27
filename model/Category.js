@@ -5,6 +5,8 @@ const categorySchema = new Schema(
   {
     value: { type: String, required: true, unique: true },
     label: { type: String, required: true, unique: true },
+    image: { type: String, required: true },
+    mainCategory: { type: [Schema.Types.Mixed], required: true },
   },
   { timestamps: true }
 );

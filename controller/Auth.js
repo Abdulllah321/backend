@@ -44,7 +44,7 @@ exports.loginUser = async (req, res) => {
   const user = req.user;
   res
     .cookie("jwt", req.user.token, {
-      expires: new Date(Date.now() + 3600000),
+      expires: new Date(Date.now() + 86400000),
       httpOnly: true,
     })
     .status(201)
@@ -57,7 +57,7 @@ exports.logout = async (req, res) => {
       expires: new Date(Date.now()),
       httpOnly: true,
     })
-    .sendStatus(200)
+    .sendStatus(200);
 };
 
 exports.checkAuth = async (req, res) => {
