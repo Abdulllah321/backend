@@ -26,7 +26,7 @@ exports.fetchAllProducts = async (req, res) => {
     const averageRatings = ratings.reduce((acc, rating) => {
       if (!acc[rating.productId]) {
         acc[rating.productId] = { sum: 0, count: 0 };
-      }
+      } 
 
       acc[rating.productId].sum += rating.rating;
       acc[rating.productId].count += 1;

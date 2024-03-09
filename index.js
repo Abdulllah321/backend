@@ -20,6 +20,8 @@ const authRouter = require("./routes/Auth");
 const cartRouter = require("./routes/Carts");
 const ordersRouter = require("./routes/Orders");
 const ratingRouter = require("./routes/Ratings");
+const slidesRouter = require("./routes/Slides");
+const wishlistRouter = require("./routes/WishLists");
 const { User } = require("./model/User");
 const { isAuth, sanitizeUser, cookieExtractor } = require("./services/common");
 const path = require("path");
@@ -66,6 +68,8 @@ server.use("/auth", authRouter.router);
 server.use("/cart", isAuth(), cartRouter.router);
 server.use("/orders", isAuth(), ordersRouter.router);
 server.use("/rating", isAuth(), ratingRouter.router);
+server.use("/slides", isAuth(), slidesRouter.router);
+server.use("/wishlist", isAuth(), wishlistRouter.router);
 rootRouter.get("/*", async (req, res, next) => {
   res.sendFile(path.join(buildPath, "index.html"));
 });
