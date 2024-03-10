@@ -12,7 +12,7 @@ const wishSchema = new Schema(
 const virtual = wishSchema.virtual("id");
 
 virtual.get(function () {
-  return this._id;
+  return "RM" + this._id;
 });
 
 wishSchema.set("toJSON", {

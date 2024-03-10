@@ -11,7 +11,7 @@ const slidesSchema = new Schema(
 const virtual = slidesSchema.virtual("id");
 
 virtual.get(function () {
-  return this._id;
+  return "RM" + this._id;
 });
 
 slidesSchema.set("toJSON", {

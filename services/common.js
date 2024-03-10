@@ -2,11 +2,11 @@ const passport = require("passport");
 const nodemailer = require("nodemailer");
 
 let transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // true for 465, false for other ports
+  host: "mail.roshanmarket.com",
+  port: 465,
+  secure: true, // true for 465, false for other ports
   auth: {
-    user: "abdullahsufyan2007@gmail.com", // gmail
+    user: "business@roshanmarket.com", // gmail
     pass: process.env.MAIL_PASSWORD, // pass
   },
   tls: {
@@ -34,7 +34,7 @@ exports.cookieExtractor = function (req) {
 
 exports.sendMail = async function ({ to, subject, text, html }) {
   let info = await transporter.sendMail({
-    from: '"E-commerce" <abdullahsufyan2007@gmail.com>', // sender address
+    from: '"Roshan Market" <business@roshanmarket.com>', // sender address
     to,
     subject,
     text,

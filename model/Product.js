@@ -40,7 +40,7 @@ const productSchema = new Schema(
 const virtual = productSchema.virtual("id");
 
 virtual.get(function () {
-  return this._id;
+  return "RM" + this._id;
 });
 productSchema.set("toJSON", {
   virtuals: true,

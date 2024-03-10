@@ -21,18 +21,19 @@ exports.createOrder = async (req, res) => {
     const user = await User.findById(order.user);
     const admin = await User.find({ role: "admin" });
     const email = [...admin].map((admin) => admin.email);
-    
 
     sendMail({
       to: user.email,
       html: invoiceTemplate(order),
       subject: `Congratulations! Your Order Has Been Successfully Placed. Order#${order.id}`,
     });
+
     sendMail({
       to: [email],
       html: invoiceTemplateAdmin(order, user),
       subject: `Congratulations! A New Order is here. Order#${order.id}`,
     });
+    
     res.status(201).json(doc);
   } catch (err) {
     res.status(400).json(err);
