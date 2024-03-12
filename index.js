@@ -60,16 +60,16 @@ server.use(express.json());
 server.use(express.raw({ type: "*/*" }));
 
 // to parse req.body
-server.use("/products", isAuth(), productsRouter.router);
-server.use("/categories", categoriesRouter.router);
-server.use("/brands", isAuth(), brandsRouter.router);
-server.use("/users", isAuth(), usersRouter.router);
-server.use("/auth", authRouter.router);
-server.use("/cart", isAuth(), cartRouter.router);
-server.use("/orders", isAuth(), ordersRouter.router);
-server.use("/rating", isAuth(), ratingRouter.router);
-server.use("/slides", isAuth(), slidesRouter.router);
-server.use("/wishlist", isAuth(), wishlistRouter.router);
+server.use("/api/products", isAuth(), productsRouter.router);
+server.use("/api/categories", categoriesRouter.router);
+server.use("/api/brands", isAuth(), brandsRouter.router);
+server.use("/api/users", isAuth(), usersRouter.router);
+server.use("/api/auth", authRouter.router);
+server.use("/api/cart", isAuth(), cartRouter.router);
+server.use("/api/orders", isAuth(), ordersRouter.router);
+server.use("/api/rating", isAuth(), ratingRouter.router);
+server.use("/api/slides", isAuth(), slidesRouter.router);
+server.use("/api/wishlist", isAuth(), wishlistRouter.router);
 rootRouter.get("/*", async (req, res, next) => {
   res.sendFile(path.join(buildPath, "index.html"));
 });
