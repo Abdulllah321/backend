@@ -6,7 +6,7 @@ const { fetchUserById } = require("./User");
 exports.fetchOrdersByUser = async (req, res) => {
   const { id } = req.user;
   try {
-    const orders = await Order.find({ user: id });
+    const orders = await Order.find({ user: id }).sort({ createdAt: -1 });
 
     res.status(200).json(orders);
   } catch (err) {
