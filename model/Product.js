@@ -33,6 +33,8 @@ const productSchema = new Schema(
     highlights: { type: [String] },
     keywords: { type: [String] },
     deleted: { type: Boolean, default: false },
+        sold: {type: Number, default:0}
+
   },
   { timestamps: true }
 );
