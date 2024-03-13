@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const productSchema = new Schema(
   {
     title: { type: String, required: true},
+    shortDescription: { type: String, required: true},
     description: { type: String, required: true },
     price: {
       type: Number,
@@ -33,8 +34,7 @@ const productSchema = new Schema(
     highlights: { type: [String] },
     keywords: { type: [String] },
     deleted: { type: Boolean, default: false },
-        sold: {type: Number, default:0}
-
+    sold: {type: Number, default:0}
   },
   { timestamps: true }
 );
