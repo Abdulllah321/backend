@@ -68,6 +68,9 @@ exports.fetchAllOrders = async (req, res) => {
 
   if (req.query._sort && req.query._order) {
     query = query.sort({ [req.query._sort]: req.query._order });
+  } else {
+    // Set default sorting by createdAt if no sort parameters are provided
+    query = query.sort({ createdAt: 'desc' }); // 'desc' for descending order
   }
 
   if (req.query.status) {
@@ -93,3 +96,4 @@ exports.fetchAllOrders = async (req, res) => {
     res.status(400).json(err);
   }
 };
+
